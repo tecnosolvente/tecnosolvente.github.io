@@ -2,6 +2,8 @@
 
 Landing page de **Tecno Solvente** (Digitalización y Automatización Comercial), hecha con Astro 5 y Tailwind CSS 4.
 
+**Sitio publicado:** https://tecnosolvente.github.io/ (se actualiza solo en cada push a `main`).
+
 ## Uso
 
 ```bash
