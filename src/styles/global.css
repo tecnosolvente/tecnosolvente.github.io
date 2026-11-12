@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+
+/*
+ * Tokens de diseño (Tailwind v4: se definen con @theme y generan utilidades,
+ * p. ej. --color-brand-400 → bg-brand-400, text-brand-400, etc.).
+ */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Verde tecnología */
+  --color-brand-300: #6ee7b7;
+  --color-brand-400: #34d399;
+  --color-brand-500: #10b981;
+  --color-brand-600: #059669;
+
+  /* Fondo oscuro elegante */
+  --color-ink-950: #05080d;
+  --color-ink-900: #0a0f17;
+  --color-ink-800: #111827;
+  --color-ink-700: #1f2937;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Compensa la navbar fija al saltar a un ancla */
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-ink-950 font-sans text-slate-300 antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-display text-balance text-white;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-400;
+  }
+}
+
+@layer components {
+  /* Botón primario reutilizable */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-500 px-6 py-3 font-semibold text-ink-950
+      shadow-[0_0_30px_-6px_var(--color-brand-500)] transition hover:bg-brand-400 active:scale-[0.98];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 font-semibold text-white
+      transition hover:border-brand-400/60 hover:bg-white/5;
+  }
+  /* Encabezado chico sobre los títulos de sección */
+  .eyebrow {
+    @apply text-sm font-semibold tracking-widest text-brand-400 uppercase;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

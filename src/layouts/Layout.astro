@@ -1,0 +1,52 @@
+---
+/**
+ * Layout base: <head>, metadatos SEO/Open Graph (por idioma), hreflang, fuentes y estilos globales.
+ */
+import '../styles/global.css';
+import { getLang, LANGS, localizedPath, t, withBase } from '../i18n/utils';
+
+const lang = getLang(Astro.url);
+const tr = t(lang);
+
+// Con `site` configurado en astro.config.mjs las URLs quedan absolutas (lo ideal para Google).
+const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
+---
+
+<!doctype html>
+<html lang={tr.meta.htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tr.meta.title}</title>
+    <meta name="description" content={tr.meta.description} />
+    <meta name="theme-color" content="#05080d" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+
+    <!-- Versiones de la página en otros idiomas (para Google) -->
+    <link rel="canonical" href={abs(localizedPath(lang))} />
+    {LANGS.map((l) => <link rel="alternate" hreflang={t(l).meta.htmlLang} href={abs(localizedPath(l))} />)}
+    <link rel="alternate" hreflang="x-default" href={abs(localizedPath('es'))} />
+
+    <!-- Open Graph: cómo se ve el link al compartirlo por WhatsApp / redes -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={tr.meta.title} />
+    <meta property="og:description" content={tr.meta.description} />
+    <meta property="og:locale" content={tr.meta.ogLocale} />
+    {
+      LANGS.filter((l) => l !== lang).map((l) => (
+        <meta property="og:locale:alternate" content={t(l).meta.ogLocale} />
+      ))
+    }
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

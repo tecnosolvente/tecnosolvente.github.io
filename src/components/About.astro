@@ -1,0 +1,64 @@
+---
+/**
+ * "Quién está detrás": muestra a la persona real detrás del emprendimiento
+ * y enlaza a su LinkedIn. Refuerza la confianza justo antes del cierre (Contact).
+ */
+import { OWNER, SITE } from '../config/site';
+import LinkedInIcon from './LinkedInIcon.astro';
+import { getLang, t } from '../i18n/utils';
+
+const tr = t(getLang(Astro.url));
+---
+
+<!-- Mismo ancho y márgenes que el resto de las secciones (max-w-6xl) -->
+<section id="nosotros" class="pb-20 sm:pb-28">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+  <!--
+    Mobile: todo apilado y centrado.
+    Tablet: foto | texto, con el botón debajo del texto.
+    Desktop: foto | texto | botón a la derecha.
+  -->
+  <div
+    class="grid items-center justify-items-center gap-x-10 gap-y-6 rounded-3xl border border-white/10 bg-ink-800/50 p-8 text-center sm:grid-cols-[auto_1fr] sm:justify-items-start sm:p-10 sm:text-left lg:grid-cols-[auto_1fr_auto] lg:px-12"
+  >
+    <!-- Foto o iniciales -->
+    {
+      OWNER.photo ? (
+        <img
+          src={OWNER.photo}
+          alt={OWNER.name}
+          width="112"
+          height="112"
+          loading="lazy"
+          class="size-28 shrink-0 rounded-full object-cover ring-2 ring-brand-400/40"
+        />
+      ) : (
+        <div
+          class="grid size-28 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand-400 to-brand-600 font-display text-3xl font-bold text-ink-950 ring-4 ring-brand-400/20"
+          aria-hidden="true"
+        >
+          {OWNER.initials}
+        </div>
+      )
+    }
+
+    <div class="max-w-2xl">
+      <p class="eyebrow">{tr.about.eyebrow}</p>
+      <h2 class="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">{tr.about.hello(OWNER.name)}</h2>
+      <p class="mt-3 leading-relaxed text-slate-400">
+        {tr.about.text(SITE.name)}
+      </p>
+    </div>
+
+    <a
+      href={OWNER.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-ghost min-h-11 px-5 py-2.5 text-sm whitespace-nowrap sm:col-start-2 lg:col-start-3 lg:row-start-1"
+    >
+      <LinkedInIcon class="size-4 text-[#0A66C2]" />
+      {tr.about.linkedin}
+    </a>
+  </div>
+  </div>
+</section>

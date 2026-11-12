@@ -1,0 +1,104 @@
+---
+/**
+ * Tarjeta de un plan. Precios desde PLANS (src/config/site.ts), textos desde src/i18n/ui.ts.
+ *
+ * Orden pensado para comparar planes de un vistazo:
+ *   nombre → precio (alineado entre tarjetas) → descripción → cambios posteriores → botón.
+ */
+import type { Plan } from '../config/site';
+import { MONTHLY_CHANGES, whatsappLink } from '../config/site';
+import { formatPrice, getLang, priceText, t } from '../i18n/utils';
+
+interface Props {
+  plan: Plan;
+}
+
+const { plan } = Astro.props;
+const lang = getLang(Astro.url);
+const tr = t(lang);
+const copy = tr.plans[plan.id];
+const price = plan.price !== undefined ? formatPrice(plan.price, lang) : undefined;
+const updates = price ? plan.updates : undefined;
+---
+
+<article
+  class:list={[
+    'relative flex flex-col rounded-3xl border p-7',
+    plan.featured
+      ? 'border-brand-400/60 bg-gradient-to-b from-brand-500/10 to-ink-800/60 shadow-[0_0_60px_-20px_var(--color-brand-500)]'
+      : 'border-white/10 bg-ink-800/50',
+  ]}
+>
+  {
+    plan.featured && (
+      <span class="absolute -top-3 left-7 rounded-full bg-brand-500 px-3 py-1 text-xs font-bold text-ink-950">
+        {tr.plan.featured}
+      </span>
+    )
+  }
+
+  <h3 class="text-xl font-semibold">{copy.name}</h3>
+
+  <!-- Precio inicial: va arriba para que quede a la misma altura en todas las tarjetas -->
+  <div class="mt-4">
+    {
+      price ? (
+        <p class="font-display text-4xl font-bold whitespace-nowrap text-white">
+          {/* "ARS" en chico para que el número entre en las tarjetas angostas */}
+          <span class:list={[price.prefix !== '$' && 'align-[0.35em] text-base font-semibold text-slate-300']}>{price.prefix === '$' ? '$' : `${price.prefix} `}</span>{price.amount}
+        </p>
+      ) : (
+        <p class="font-display text-3xl leading-10 font-bold text-white">{tr.plan.ask}</p>
+      )
+    }
+    <p class="mt-1 text-sm text-slate-400">{price ? tr.plan.oneTime : tr.plan.custom}</p>
+  </div>
+
+  <p class="mt-5 text-sm leading-relaxed text-slate-400">{copy.summary}</p>
+
+  <!-- Cambios posteriores (o mensaje según el tipo de plan) -->
+  <div class="mt-6 border-t border-white/10 pt-5 text-sm">
+    {
+      !price ? (
+        <p class="text-slate-400">{tr.plan.customText}</p>
+      ) : updates ? (
+        <>
+          <p class="text-xs font-semibold tracking-wider text-slate-300 uppercase">{tr.plan.changesTitle}</p>
+          {/* Cada fila: "Concepto · nota" y debajo el precio. Igual en todos los idiomas y anchos. */}
+          <dl class="mt-3 space-y-3">
+            <div>
+              <dt class="text-slate-300">
+                {tr.plan.monthly} <span class="text-slate-400">· {tr.plan.monthlyNote(MONTHLY_CHANGES)}</span>
+              </dt>
+              <dd class="mt-0.5 font-semibold text-white">
+                {updates.monthly !== undefined ? priceText(updates.monthly, lang) + tr.plan.perMonth : tr.plan.ask}
+              </dd>
+            </div>
+            <div>
+              <dt class="text-slate-300">
+                {tr.plan.perChange} <span class="text-slate-400">· {tr.plan.perChangeNote}</span>
+              </dt>
+              <dd class="mt-0.5 font-semibold text-white">
+                {updates.perChange !== undefined ? priceText(updates.perChange, lang) : tr.plan.ask}
+              </dd>
+            </div>
+          </dl>
+        </>
+      ) : (
+        <p class="text-slate-400">{tr.plan.noMonthly}</p>
+      )
+    }
+  </div>
+
+  <!-- CTA: abre WhatsApp con el plan ya mencionado en el mensaje -->
+  <div class="mt-auto pt-7">
+    <a
+      href={whatsappLink(tr.wa.plan(copy.name))}
+      target="_blank"
+      rel="noopener noreferrer"
+      class:list={[plan.featured ? 'btn-primary' : 'btn-ghost', 'w-full px-4 whitespace-nowrap']}
+    >
+      {tr.plan.cta}
+    </a>
+  </div>
+</article>

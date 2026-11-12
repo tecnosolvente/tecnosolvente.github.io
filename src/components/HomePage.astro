@@ -1,0 +1,27 @@
+---
+/**
+ * Página completa (todas las secciones en orden). La usan las 3 versiones de idioma:
+ * src/pages/index.astro (es), src/pages/en/index.astro y src/pages/pt-br/index.astro.
+ * Cada componente detecta el idioma desde la URL.
+ */
+import Layout from '../layouts/Layout.astro';
+import Navbar from './Navbar.astro';
+import Hero from './Hero.astro';
+import ValueProps from './ValueProps.astro';
+import Pricing from './Pricing.astro';
+import About from './About.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+---
+
+<Layout>
+  <Navbar />
+  <main>
+    <Hero />
+    <ValueProps />
+    <Pricing />
+    <About />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>

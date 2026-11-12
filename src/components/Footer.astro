@@ -1,0 +1,30 @@
+---
+import { OWNER, SITE } from '../config/site';
+import LinkedInIcon from './LinkedInIcon.astro';
+import { getLang, t } from '../i18n/utils';
+
+const tr = t(getLang(Astro.url));
+---
+
+<footer class="border-t border-white/5 py-10">
+  <div
+    class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 text-center text-sm text-slate-400 sm:px-6 lg:flex-row lg:text-left"
+  >
+    <p>
+      <span class="font-semibold text-slate-300">{SITE.name}</span> · {tr.tagline}
+    </p>
+    <div class="flex flex-col items-center gap-3 lg:flex-row lg:gap-6">
+      <a
+        href={OWNER.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex min-h-11 items-center gap-2 transition hover:text-white"
+        aria-label={tr.footer.linkedinLabel(OWNER.name)}
+      >
+        <LinkedInIcon class="size-4" />
+        LinkedIn
+      </a>
+      <p>© 2026 {SITE.name}. {tr.footer.rights}</p>
+    </div>
+  </div>
+</footer>

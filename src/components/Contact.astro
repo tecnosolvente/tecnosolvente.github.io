@@ -1,0 +1,46 @@
+---
+/**
+ * Bloque de cierre: invita a agendar una visita con un CTA grande a WhatsApp.
+ */
+import { whatsappLink } from '../config/site';
+import { getLang, t } from '../i18n/utils';
+import WhatsAppIcon from './WhatsAppIcon.astro';
+
+const tr = t(getLang(Astro.url));
+---
+
+<!-- Mismo ancho y márgenes que el resto de las secciones (max-w-6xl) -->
+<section id="contacto" class="pb-20 sm:pb-28">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+  <div
+    class="relative overflow-hidden rounded-[2rem] border border-brand-400/30 bg-gradient-to-br from-ink-800 via-ink-900 to-ink-950 px-6 py-16 text-center sm:px-12 sm:py-20"
+  >
+    <!-- Resplandor decorativo -->
+    <div
+      class="pointer-events-none absolute -bottom-32 left-1/2 h-72 w-[600px] -translate-x-1/2 rounded-full bg-brand-500/25 blur-[100px]"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="relative">
+      <p class="eyebrow">{tr.contact.eyebrow}</p>
+      <h2 class="mx-auto mt-3 max-w-2xl text-3xl font-bold tracking-tight text-balance sm:text-5xl">
+        {tr.contact.title}
+      </h2>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-slate-400">
+        {tr.contact.text}
+      </p>
+
+      <a
+        href={whatsappLink(tr.wa.visit)}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-primary mt-10 w-full px-4 py-5 text-base whitespace-nowrap min-[360px]:px-6 min-[360px]:text-lg sm:w-auto sm:px-12 sm:text-xl"
+      >
+        <WhatsAppIcon class="size-6 shrink-0 sm:size-7" />
+        {tr.contact.cta}
+      </a>
+    </div>
+  </div>
+</div>
+</section>

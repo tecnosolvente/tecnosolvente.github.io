@@ -1,0 +1,88 @@
+---
+/**
+ * Hero: título principal, bajada y CTAs. A la derecha (desktop) una tarjeta
+ * ilustrativa que resume el recorrido: cartel NFC/QR → web → pedido por WhatsApp.
+ */
+import { whatsappLink } from '../config/site';
+import { getLang, t } from '../i18n/utils';
+import WhatsAppIcon from './WhatsAppIcon.astro';
+
+const tr = t(getLang(Astro.url));
+const steps = tr.hero.steps;
+---
+
+<section id="inicio" class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
+  <!-- Fondo: grilla sutil + resplandor verde -->
+  <div
+    class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgb(255_255_255/0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.04)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_70%)]"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[720px] -translate-x-1/2 rounded-full bg-brand-500/20 blur-[120px]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto grid max-w-6xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[1.15fr_1fr]">
+    <!-- Texto -->
+    <div class="text-center lg:text-left">
+      <p
+        class="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-400/10 px-4 py-1.5 text-sm font-medium text-brand-300"
+      >
+        <span class="size-2 animate-pulse rounded-full bg-brand-400"></span>
+        {tr.hero.badge}
+      </p>
+
+      <h1 class="text-4xl leading-[1.1] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+        {tr.hero.titleA}
+        <span class="bg-gradient-to-r from-brand-300 to-brand-500 bg-clip-text text-transparent">{tr.hero.titleB}</span>
+      </h1>
+
+      <p class="mx-auto mt-6 max-w-xl text-lg text-pretty text-slate-400 lg:mx-0">
+        {tr.hero.text}
+      </p>
+
+      <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
+        <a href="#planes" class="btn-primary w-full sm:w-auto">
+          {tr.hero.ctaPlans}
+          <svg class="size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+            ><path
+              fill-rule="evenodd"
+              d="M10 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42L9 13.6V4a1 1 0 0 1 1-1Z"
+              clip-rule="evenodd"></path></svg
+          >
+        </a>
+        <a href={whatsappLink(tr.wa.general)} target="_blank" rel="noopener noreferrer" class="btn-ghost w-full sm:w-auto">
+          <WhatsAppIcon class="size-5 text-brand-400" />
+          {tr.hero.ctaTalk}
+        </a>
+      </div>
+    </div>
+
+    <!-- Tarjeta ilustrativa -->
+    <div class="relative mx-auto w-full max-w-md">
+      <div
+        class="rounded-3xl border border-white/10 bg-gradient-to-b from-ink-800/90 to-ink-900/90 p-6 shadow-2xl shadow-black/50 backdrop-blur"
+      >
+        <div class="mb-6 flex items-center justify-between">
+          <span class="text-sm font-semibold text-white">{tr.hero.howTitle}</span>
+          <span class="rounded-full bg-brand-400/10 px-3 py-1 text-xs font-medium text-brand-300">{tr.hero.howSteps}</span>
+        </div>
+        <ol class="space-y-4">
+          {
+            steps.map((s, i) => (
+              <li class="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/[0.03] p-4">
+                <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-500/15 font-display font-bold text-brand-300">
+                  {i + 1}
+                </span>
+                <span class="flex-1 text-sm text-slate-200">{s.label}</span>
+                <span class="hidden text-xs font-medium text-slate-400 sm:inline">{s.tag}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

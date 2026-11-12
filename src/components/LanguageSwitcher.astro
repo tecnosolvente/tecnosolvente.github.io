@@ -1,0 +1,86 @@
+---
+/**
+ * Selector de idioma: desplegable compacto hecho con <details>/<summary>,
+ * así funciona sin JavaScript. Un script mínimo solo lo cierra al tocar afuera.
+ * Cada opción es un link normal a la versión de la página en ese idioma.
+ */
+import { getLang, LANG_NAMES, LANGS, localizedPath, t } from '../i18n/utils';
+
+const lang = getLang(Astro.url);
+const tr = t(lang);
+---
+
+<details class="lang-switcher relative shrink-0">
+  <summary
+    class="flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center gap-1.5 rounded-full px-2 min-[420px]:px-3 text-sm font-semibold text-slate-300 transition select-none hover:bg-white/5 hover:text-white [&::-webkit-details-marker]:hidden"
+    aria-label={`${tr.nav.language}: ${LANG_NAMES[lang].long}`}
+  >
+    <!-- Ícono globo -->
+    <svg
+      class="size-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path>
+    </svg>
+    {LANG_NAMES[lang].short}
+    <svg class="chevron hidden size-3 transition min-[420px]:block" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path
+        fill-rule="evenodd"
+        d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z"
+        clip-rule="evenodd"></path>
+    </svg>
+  </summary>
+
+  <!-- En celular el menú ocupa el ancho de la pantalla bajo la barra; desde 640px, desplegable compacto -->
+  <ul
+    class="fixed inset-x-4 top-[4.25rem] overflow-hidden sm:absolute sm:inset-x-auto sm:top-auto sm:right-0 sm:mt-2 sm:w-52 rounded-2xl border border-white/10 bg-ink-900 p-1.5 shadow-2xl shadow-black/60"
+  >
+    {
+      LANGS.map((l) => (
+        <li>
+          <a
+            href={localizedPath(l)}
+            hreflang={t(l).meta.htmlLang}
+            lang={t(l).meta.htmlLang}
+            aria-current={l === lang ? 'page' : undefined}
+            class:list={[
+              'flex min-h-11 items-center justify-between gap-3 rounded-xl px-3 text-sm transition',
+              l === lang ? 'bg-brand-500/10 font-semibold text-brand-300' : 'text-slate-300 hover:bg-white/5 hover:text-white',
+            ]}
+          >
+            {LANG_NAMES[l].long}
+            <span class="text-xs text-slate-400">{LANG_NAMES[l].short}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</details>
+
+<style>
+  .lang-switcher[open] .chevron {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  // Cierra el desplegable al tocar fuera de él o al presionar Escape.
+  for (const el of document.querySelectorAll<HTMLDetailsElement>('.lang-switcher')) {
+    document.addEventListener('click', (e) => {
+      if (el.open && !el.contains(e.target as Node)) el.open = false;
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && el.open) {
+        el.open = false;
+        el.querySelector('summary')?.focus();
+      }
+    });
+  }
+</script>
