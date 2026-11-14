@@ -23,6 +23,7 @@ const es = {
     ctaLong: 'Contactar por WhatsApp',
     ctaShort: 'WhatsApp',
     language: 'Idioma',
+    theme: 'Cambiar entre modo claro y oscuro',
   },
   wa: {
     general: 'Hola Tecno Solvente! Quiero consultar por mi negocio.',
@@ -45,9 +46,9 @@ const es = {
     ],
   },
   value: {
-    eyebrow: 'Por qué elegirnos',
+    eyebrow: 'Lo que ganás',
     title: 'Todo lo digital de tu negocio, en un solo lugar',
-    text: 'Te ayudamos a que tus clientes te encuentren y te contacten fácil, sin que tengas que saber nada de tecnología.',
+    text: 'Tus clientes te encuentran y te contactan fácil, sin que tengas que saber nada de tecnología.',
     items: [
       {
         title: 'Presencia Instantánea',
@@ -58,8 +59,8 @@ const es = {
         text: 'Una página propia para tu negocio, diseñada a tu medida, que se ve bien en cualquier celular.',
       },
       {
-        title: 'Nos Ocupamos de Todo',
-        text: 'Armamos todo por vos y, con el abono mensual, hacemos los cambios que necesites. Vos seguí atendiendo tu negocio.',
+        title: 'Cero Complicaciones',
+        text: 'Recibís todo armado y, con el abono mensual, pedís los cambios que necesites. Vos seguí atendiendo tu negocio.',
       },
     ],
   },
@@ -74,7 +75,7 @@ const es = {
     featured: 'Recomendado',
     oneTime: 'pago único',
     custom: 'presupuesto a medida',
-    customText: 'Contanos qué necesitás y te armamos una propuesta para tu negocio.',
+    customText: 'Contá qué necesitás y recibí una propuesta pensada para tu negocio.',
     changesTitle: 'Cambios posteriores',
     monthly: 'Abono mensual',
     monthlyNote: (n: number) => `hasta ${n} cambios por mes`,
@@ -131,14 +132,14 @@ const es = {
     eyebrow: 'Quién está detrás',
     hello: (name: string) => `Hola, soy ${name}`,
     text: (site: string) =>
-      `Estoy detrás de ${site}. Cuando nos escribís, hablás directamente conmigo: te asesoro, armo tu solución y te acompaño después.`,
+      `Estoy detrás de ${site}. Cuando escribís, hablás directamente conmigo: te asesoro, armo tu solución y te acompaño después.`,
     linkedin: 'Ver mi perfil en LinkedIn',
   },
   contact: {
     eyebrow: 'Hablemos de tu negocio',
-    title: 'Agendá una visita o consultanos por tu negocio',
-    text: 'Pasamos por tu local, vemos cómo trabajás y te recomendamos la solución justa para vos.',
-    cta: 'Escribinos por WhatsApp',
+    title: 'Agendá una visita o consultá por tu negocio',
+    text: 'Recibí una visita en tu local: contá cómo trabajás y llevate la solución justa para tu negocio.',
+    cta: 'Consultá por WhatsApp',
   },
   footer: {
     rights: 'Todos los derechos reservados.',
@@ -165,6 +166,7 @@ const en: Dict = {
     ctaLong: 'Contact on WhatsApp',
     ctaShort: 'WhatsApp',
     language: 'Language',
+    theme: 'Toggle light and dark mode',
   },
   wa: {
     general: "Hi Tecno Solvente! I'd like to ask about my business.",
@@ -187,9 +189,9 @@ const en: Dict = {
     ],
   },
   value: {
-    eyebrow: 'Why choose us',
+    eyebrow: 'What you get',
     title: 'Everything digital for your business, in one place',
-    text: 'We help your customers find and contact you easily, with no tech knowledge needed on your side.',
+    text: 'Your customers find and contact you easily, with no tech knowledge needed on your side.',
     items: [
       {
         title: 'Instant Presence',
@@ -200,8 +202,8 @@ const en: Dict = {
         text: 'A website of your own, designed for your business, that looks great on any phone.',
       },
       {
-        title: 'We Handle Everything',
-        text: 'We set everything up for you and, with the monthly plan, make the changes you need. You keep running your business.',
+        title: 'Zero Hassle',
+        text: 'You get everything set up and, with the monthly plan, request the changes you need. You keep running your business.',
       },
     ],
   },
@@ -216,7 +218,7 @@ const en: Dict = {
     featured: 'Recommended',
     oneTime: 'one-time payment',
     custom: 'custom quote',
-    customText: "Tell us what you need and we'll put together a proposal for your business.",
+    customText: 'Share what you need and get a proposal tailored to your business.',
     changesTitle: 'Later changes',
     monthly: 'Monthly plan',
     monthlyNote: (n: number) => `up to ${n} changes per month`,
@@ -224,7 +226,7 @@ const en: Dict = {
     perChangeNote: 'no monthly plan',
     perMonth: '/mo',
     noMonthly: 'No monthly fees.',
-    ask: 'Ask us',
+    ask: 'On request',
     cta: 'Ask about this plan',
   },
   plans: {
@@ -272,14 +274,14 @@ const en: Dict = {
     eyebrow: "Who's behind it",
     hello: (name: string) => `Hi, I'm ${name}`,
     text: (site: string) =>
-      `I'm the person behind ${site}. When you message us, you talk directly to me: I advise you, build your solution and support you afterwards.`,
+      `I'm the person behind ${site}. When you get in touch, you talk directly to me: I advise you, build your solution and support you afterwards.`,
     linkedin: 'View my LinkedIn profile',
   },
   contact: {
     eyebrow: "Let's talk about your business",
     title: 'Book a visit or ask about your business',
-    text: 'We visit your shop, see how you work and recommend the right solution for you.',
-    cta: 'Message us on WhatsApp',
+    text: 'Get a visit at your shop: show how you work and get the right solution for your business.',
+    cta: 'Ask on WhatsApp',
   },
   footer: {
     rights: 'All rights reserved.',
@@ -304,6 +306,7 @@ const ptBr: Dict = {
     ctaLong: 'Falar no WhatsApp',
     ctaShort: 'WhatsApp',
     language: 'Idioma',
+    theme: 'Alternar entre modo claro e escuro',
   },
   wa: {
     general: 'Olá Tecno Solvente! Quero saber mais para o meu negócio.',
@@ -326,9 +329,9 @@ const ptBr: Dict = {
     ],
   },
   value: {
-    eyebrow: 'Por que nos escolher',
+    eyebrow: 'O que você ganha',
     title: 'Tudo o que é digital no seu negócio, em um só lugar',
-    text: 'Ajudamos seus clientes a encontrar você e entrar em contato facilmente, sem que você precise entender de tecnologia.',
+    text: 'Seus clientes encontram você e entram em contato facilmente, sem que você precise entender de tecnologia.',
     items: [
       {
         title: 'Presença Instantânea',
@@ -339,8 +342,8 @@ const ptBr: Dict = {
         text: 'Uma página própria para o seu negócio, feita sob medida, que fica ótima em qualquer celular.',
       },
       {
-        title: 'Cuidamos de Tudo',
-        text: 'Montamos tudo para você e, com a mensalidade, fazemos as alterações que precisar. Você segue cuidando do seu negócio.',
+        title: 'Zero Complicação',
+        text: 'Você recebe tudo pronto e, com a mensalidade, pede as alterações que precisar. Você segue cuidando do seu negócio.',
       },
     ],
   },
@@ -355,7 +358,7 @@ const ptBr: Dict = {
     featured: 'Recomendado',
     oneTime: 'pagamento único',
     custom: 'orçamento sob medida',
-    customText: 'Conte o que você precisa e montamos uma proposta para o seu negócio.',
+    customText: 'Conte o que você precisa e receba uma proposta pensada para o seu negócio.',
     changesTitle: 'Alterações posteriores',
     monthly: 'Mensalidade',
     monthlyNote: (n: number) => `até ${n} alterações por mês`,
@@ -417,7 +420,7 @@ const ptBr: Dict = {
   contact: {
     eyebrow: 'Vamos falar do seu negócio',
     title: 'Agende uma visita ou fale sobre o seu negócio',
-    text: 'Vamos até o seu estabelecimento, entendemos como você trabalha e recomendamos a solução certa para você.',
+    text: 'Receba uma visita no seu estabelecimento: mostre como você trabalha e descubra a solução certa para o seu negócio.',
     cta: 'Chame no WhatsApp',
   },
   footer: {

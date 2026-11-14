@@ -1,0 +1,88 @@
+---
+/**
+ * Botón para alternar entre modo claro y oscuro.
+ * El tema inicial lo decide el script del <head> (Layout.astro): la elección guardada
+ * o, si no hay ninguna, la preferencia del sistema. Este botón la cambia y la recuerda.
+ */
+import { getLang, t } from '../i18n/utils';
+
+const tr = t(getLang(Astro.url));
+---
+
+<button
+  type="button"
+  class="theme-toggle grid min-h-11 min-w-11 shrink-0 cursor-pointer place-items-center rounded-full text-slate-300 transition hover:bg-white/5 hover:text-white"
+  aria-label={tr.nav.theme}
+  title={tr.nav.theme}
+>
+  <!-- Sol: se ve en modo oscuro (pasar a claro) -->
+  <svg
+    class="icon-sun size-5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+  </svg>
+  <!-- Luna: se ve en modo claro (pasar a oscuro) -->
+  <svg
+    class="icon-moon size-5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
+  </svg>
+</button>
+
+<style>
+  .icon-moon,
+  :global([data-theme='light']) .icon-sun {
+    display: none;
+  }
+  :global([data-theme='light']) .icon-moon {
+    display: block;
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+
+  function apply(theme: 'light' | 'dark') {
+    root.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f8fafc' : '#05080d');
+    for (const btn of document.querySelectorAll('.theme-toggle')) {
+      btn.setAttribute('aria-pressed', String(theme === 'light'));
+    }
+  }
+
+  apply(root.dataset.theme === 'light' ? 'light' : 'dark');
+
+  for (const btn of document.querySelectorAll('.theme-toggle')) {
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      apply(next);
+      try {
+        localStorage.setItem('theme', next);
+      } catch {}
+    });
+  }
+
+  // Si la persona nunca eligió, seguimos los cambios de tema del sistema en vivo.
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+    let saved = null;
+    try {
+      saved = localStorage.getItem('theme');
+    } catch {}
+    if (!saved) apply(e.matches ? 'light' : 'dark');
+  });
+</script>

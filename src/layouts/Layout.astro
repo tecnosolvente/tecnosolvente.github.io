@@ -1,6 +1,6 @@
 ---
 /**
- * Layout base: <head>, metadatos SEO/Open Graph (por idioma), hreflang, fuentes y estilos globales.
+ * Layout base: <head>, metadatos SEO/Open Graph (por idioma), hreflang, tema claro/oscuro, fuentes y estilos globales.
  */
 import '../styles/global.css';
 import { getLang, LANGS, localizedPath, t, withBase } from '../i18n/utils';
@@ -20,6 +20,21 @@ const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : pat
     <title>{tr.meta.title}</title>
     <meta name="description" content={tr.meta.description} />
     <meta name="theme-color" content="#05080d" />
+
+    <!--
+      Tema claro/oscuro: se resuelve antes de pintar para evitar el "parpadeo".
+      Usa la elección guardada o, si no hay, la preferencia del sistema. Sin JS queda oscuro.
+    -->
+    <script is:inline>
+      (function () {
+        var saved = null;
+        try {
+          saved = localStorage.getItem('theme');
+        } catch (e) {}
+        var theme = saved === 'light' || saved === 'dark' ? saved : matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
 
     <!-- Versiones de la página en otros idiomas (para Google) -->
